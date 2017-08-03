@@ -2,11 +2,17 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.Assertions;
 
 public class GuardWalk : MonoBehaviour {
 
 	[SerializeField] private Transform target;
 	private NavMeshAgent nav;
+
+	//
+	void Awake () {
+		Assert.IsNotNull (target);
+	}
 
 	//
 	void Start () {
@@ -15,8 +21,6 @@ public class GuardWalk : MonoBehaviour {
 	
 	// 
 	void Update () {
-		nav.SetDestination (target.position);
-
 		if (GameManager.instance.GameStart == true) {
 			// random speed from .5 to 1, for levels 1 and 2
 			float randomSpeed = Random.Range (0.5f, 1f);
@@ -51,5 +55,7 @@ public class GuardWalk : MonoBehaviour {
 			Debug.Log (randomSpeed);
 			nav.speed = randomSpeed;
 		}
+
+		nav.SetDestination (target.position);
 	}
 }
